@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title= "~Die Roller~"
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body  
+    h1= "Die Roller" 
+    p Input dice in format of xdy where x is the number of die, and y is the number of sides.
+    p Use only spaces between seperate die. For example: '7d6 2d20' will roll 7 6-sided die and 2 20-sided die. 
+    form(action="/", method="post")
+      label(for="diestr") Die String: 
+      input(type="text", name="diestr")
+      input(type="submit", value="Roll 'em!")
+    block content

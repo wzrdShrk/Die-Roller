@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  if rolls
+    p You rolled: 
+    ul
+      each roll in rolls
+        li= roll
