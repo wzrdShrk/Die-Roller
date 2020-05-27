@@ -1,8 +1,14 @@
 extends layout
 
 block content
-  if rolls
-    p You rolled: 
-    ul
-      each roll in rolls
-        li= roll
+  if resultArray
+    if hasErrors
+      p Error:
+      ul
+        each result in resultArray
+          li= result.msg
+    else
+      p You Rolled:
+      ul
+        each result in resultArray
+          li= result
