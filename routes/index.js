@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', [
   check('diestr').notEmpty().withMessage("Please enter a string.")
-  .matches(/^(\d+d\d+\s+)*$/g).withMessage("Please use the format listed above.")
+  .matches(/^(\d+d\d+(\s+)?)*$/g).withMessage("Please use the format listed above.")
 ], (req, res) => {
   var errors = validationResult(req);
   var hasErrors = false;
@@ -22,7 +22,7 @@ router.post('/', [
       var max = parseInt(die.slice(die.indexOf('d')+1));
       var resultString = '';
       for (var i = 0; i < num; i++) {
-        resultString += Math.floor(Math.random() * (max - 1) + 1);
+        resultString += Math.round(Math.random() * (max - 1) + 1);
         if (i != num-1) {
           resultString += ", ";
         }
