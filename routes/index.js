@@ -5,35 +5,38 @@ var { check, validationResult } = require('express-validator');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Die Roller' });
+  res.render('index', { title: 'Dice Roller' });
 });
 
-router.post('/', [
-  check('diestr').notEmpty().withMessage("Please enter a string.")
-  .matches(/^(\d+d\d+(\s+)?)*$/g).withMessage("Please use the format listed above.")
-], (req, res) => {
-  var errors = validationResult(req);
-  var hasErrors = false;
-  var resultArray;
-  if (errors.isEmpty()) {
-    var dies = req.body.diestr.split(' ');
-    var resultArray = dies.map((die) => {
-      var num = parseInt(die.slice(0, die.indexOf('d')));
-      var max = parseInt(die.slice(die.indexOf('d')+1));
-      var resultString = '';
-      for (var i = 0; i < num; i++) {
-        resultString += Math.round(Math.random() * (max - 1) + 1);
-        if (i != num-1) {
+router.post('/', (req, res) => {
+  //get string from user
+  var userIn = req.body.userIn;
+
+  //split into array by spaces
+  var dice = userIn.split(" ");
+
+  var resultArray = new Array();
+  
+  //loop though all inputs
+  for (var i=0; i<dice.length; i++) {
+    var die = dice[i];
+    var resultString = die + ": ";
+    //if input matches die string format, gen numbers
+    if (die.match(/(\d+d\d+){1}/)) {
+      var n = die.slice(0, die.indexOf('d'));
+      var sides = die.slice(die.indexOf('d')+1);
+      for (var j=0; j<n; j++) {
+        resultString += Math.round(Math.random() * (sides - 1) + 1);
+        if (j != n-1) {
           resultString += ", ";
         }
-      } 
-      return resultString;
-    })
-  } else {
-    hasErrors = true;
-    resultArray = errors.array();
+      }
+      resultArray.push(resultString);
+    }
+    else resultArray.push(resultString + "Invalid input.");
   }
-  res.render('index', {hasErrors: hasErrors, resultArray: resultArray});
+
+  res.render('index', {resultArray});
 })
 
 module.exports = router;

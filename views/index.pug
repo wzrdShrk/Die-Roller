@@ -9,23 +9,16 @@ block roller
         p Use only spaces between seperate die. For example: '7d6 2d20' will roll 7 6-sided die and 2 20-sided die. 
         form(class='form-inline' action="/", method="post")
           div(class='input-group mb-3')
-            input(class='form-control' type="text", name="diestr")
+            input(class='form-control' type="text", name="userIn")
             div(class='input-group-append')
               button(class='btn btn-primary' type="submit") Roll
-        if resultArray
-          if hasErrors
-            p Error:
-            ul
-              each result in resultArray
-                li= result.msg
-          else
-            p You Rolled:
-            ul
-              each result in resultArray
-                li= result
+        
 
 block history
   div(class='container')
       div(class='row')
         div(class='col')
-          textarea(disabled id='history' class='form-control' style='resize:none' rows='8')
+          if resultArray
+          ul
+            each result in resultArray
+              li=result
