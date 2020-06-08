@@ -12,6 +12,17 @@ block roller
             input(class='form-control' type="text", name="diestr")
             div(class='input-group-append')
               button(class='btn btn-primary' type="submit") Roll
+        if resultArray
+          if hasErrors
+            p Error:
+            ul
+              each result in resultArray
+                li= result.msg
+          else
+            p You Rolled:
+            ul
+              each result in resultArray
+                li= result
 
 block history
   div(class='container')
