@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
   //loop though all inputs
   for (var i=0; i<dice.length; i++) {
     var die = dice[i];
-    var resultString = die + ": ";
+    var resultString = "";
     //if input matches die string format, gen numbers
     if (die.match(/(\d+d\d+){1}/)) {
       var n = die.slice(0, die.indexOf('d'));
@@ -31,9 +31,8 @@ router.post('/', (req, res) => {
           resultString += ", ";
         }
       }
-      resultArray.push(resultString);
+      resultArray.push([die, resultString]);
     }
-    else resultArray.push(resultString + "Invalid input.");
   }
 
   res.render('index', {resultArray});
